@@ -17,6 +17,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Playwright browsers and OS dependencies
+        # Stagehand uses Playwright / puppeteer under the hood; install the browsers
+        # and required OS deps so a local browser can be launched in CI.
+        run: npx playwright install --with-deps
+
       - name: Run TypeScript tests
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret
