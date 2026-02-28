@@ -40,4 +40,6 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}  # Use the secret for the API Key
         run: |
           # Run the test script wrapped by xvfb-run to ensure a DISPLAY is available
-          xvfb-run -s "-screen 0 1280x1024x24" node testStagehand.js
+          for file in tests/*.js; do
+            xvfb-run -s "-screen 0 1280x1024x24" node "$file"
+          done
