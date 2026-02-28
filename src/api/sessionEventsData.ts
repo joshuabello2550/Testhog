@@ -159,9 +159,7 @@ export async function getSessionEventsData(
               properties.$screen_name,
               distinct_id
             FROM events
-            WHERE timestamp > toDateTime('${START_ISO}') - INTERVAL 24 HOUR
-              AND timestamp < toDateTime('${END_ISO}') + INTERVAL 24 HOUR
-              AND $session_id = '${sessionId}'
+            WHERE $session_id = '${sessionId}'
             ORDER BY timestamp ASC
             LIMIT 50000
           `,
@@ -176,6 +174,7 @@ export async function getSessionEventsData(
   });
 
   const data = await response.json();
+  console.log("data: ", data);
 
   // 👇 ONLY CHANGE: map positional rows → typed objects
   const results: SessionEvent[] = data.results.map((row: any[]) => {
@@ -197,6 +196,7 @@ export async function getSessionEventsData(
       // distinct_id: row[10],
     };
   });
+  console.log("results: ", results);
 
   return results;
 }

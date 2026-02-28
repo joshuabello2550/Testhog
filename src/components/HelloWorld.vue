@@ -10,16 +10,21 @@ const postHogApiKey = ref("");
 const submitted = ref(false);
 const projectId = ref("");
 
-function handleSubmit() {
-  console.log("Session ID:", sessionId.value);
-  console.log("PostHog API Key:", postHogApiKey.value);
-  console.log("Project ID:", projectId.value);
-  submitted.value = true;
+const handleSubmit = async () => {
+  const testMode = true
+  if (testMode) {
+    sessionId.value = import.meta.env.VITE_TEST_POSTHOG_SESSION_ID
+    postHogApiKey.value = import.meta.env.VITE_TEST_POSTHOG_API_KEY
+    projectId.value = import.meta.env.VITE_TEST_POSTHOG_PROJECT_ID
+  }
+  if (sessionId.value && postHogApiKey.value && projectId.value) {
+    const data = await getSessionEventsData(sessionId.value, projectId.value, postHogApiKey.value)
+    console.log("Session Events Data:", data)
+  }
 }
 
 onMounted(async () => {
-  const data = await getSessionEventsData(sessionId.value, projectId.value, postHogApiKey.value)
-  console.log("Session Events Data:", data)
+  await handleSubmit()
 })
 </script>
 
@@ -30,30 +35,15 @@ onMounted(async () => {
     <form @submit.prevent="handleSubmit">
       <div class="field">
         <label for="session-id">Session ID</label>
-        <input
-          id="session-id"
-          v-model="sessionId"
-          type="text"
-          placeholder="Enter session ID"
-        />
+        <input id="session-id" v-model="sessionId" type="text" placeholder="Enter session ID" />
       </div>
       <div class="field">
         <label for="posthog-key">PostHog API Key</label>
-        <input
-          id="posthog-key"
-          v-model="postHogApiKey"
-          type="text"
-          placeholder="Enter PostHog API key"
-        />
+        <input id="posthog-key" v-model="postHogApiKey" type="text" placeholder="Enter PostHog API key" />
       </div>
-       <div class="field">
+      <div class="field">
         <label for="project-id">Project Id</label>
-        <input
-          id="project-id"
-          v-model="projectId"
-          type="text"
-          placeholder="Enter Project ID"
-        />
+        <input id="project-id" v-model="projectId" type="text" placeholder="Enter Project ID" />
       </div>
       <button type="submit">Submit</button>
     </form>
