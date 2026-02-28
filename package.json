@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^4.0.69",
     "@ai-sdk/anthropic": "^3.0.50",
+    "@ai-sdk/google": "^3.0.34",
     "@ai-sdk/google-vertex": "^4.0.68",
     "@ai-sdk/openai": "^3.0.37",
     "@browserbasehq/stagehand": "^3.1.0",
