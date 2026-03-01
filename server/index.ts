@@ -14,7 +14,7 @@ app.post("/api/create-file", async (req, res) => {
       installationId,
       owner,
       repo,
-      path: "./tests/test.txt",
+      path: "tests/test.txt",
       content,
       message: "Auto commit",
     });
