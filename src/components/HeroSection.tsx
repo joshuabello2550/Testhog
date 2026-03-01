@@ -28,7 +28,8 @@ const HeroSection = () => {
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
-          Paste your PostHog session ID and we generate a Playwright test case, then push it straight to your GitHub repo.
+          Paste your PostHog session ID and we generate a Playwright test case,
+          then push it straight to your GitHub repo.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

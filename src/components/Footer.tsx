@@ -42,7 +42,8 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Turn PostHog session replays into Playwright test cases. Automatically.
+              Turn PostHog session replays into Playwright test cases.
+              Automatically.
             </p>
             <div className="mt-6 flex items-center gap-3">
               <a

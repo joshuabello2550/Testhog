@@ -6,7 +6,9 @@ const GenerateForm = () => {
   const [projectId, setProjectId] = useState("");
   const [posthogApiKey, setPosthogApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<"idle" | "generating" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "generating" | "success" | "error"
+  >("idle");
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +38,8 @@ const GenerateForm = () => {
             Generate a test case
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Enter your session details below and we'll generate a test case and push it to GitHub.
+            Enter your session details below and we'll generate a test case and
+            push it to GitHub.
           </p>
         </div>
 
