@@ -10,12 +10,46 @@ const GenerateForm = () => {
     "idle" | "generating" | "success" | "error"
   >("idle");
 
+  const generateTestCase = async () => {
+    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const installationId = 113203245;
+    const owner = "joshuabello2550";
+    const repo = "e14-hackathon";
+
+    const eventsRes = await fetch(`${BASE_URL}/api/session-events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sessionId, projectId, posthogApiKey }),
+    });
+    const { events } = await eventsRes.json();
+    console.log("events: ", events);
+
+    // Step 2: Convert events to Stagehand code
+    const stagehandRes = await fetch(`${BASE_URL}/api/session-to-stagehand`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sessionEvents: events }),
+    });
+    const { code } = await stagehandRes.json();
+    console.log("generated code: ", code);
+
+    // Step 3: Create the file in GitHub
+    const res = await fetch(`${BASE_URL}/api/create-file`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ installationId, owner, repo, content: code }),
+    });
+    console.log("create file response: ", await res.json());
+  };
+
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!sessionId || !projectId || !posthogApiKey) return;
 
     setIsLoading(true);
     setStatus("generating");
+
+    await generateTestCase();
 
     // Simulate generation process
     await new Promise((resolve) => setTimeout(resolve, 2500));
